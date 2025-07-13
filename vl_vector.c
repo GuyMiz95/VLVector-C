@@ -2,15 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-
+/**
+ * Computes the new capacity of a vector, is called when vector size needs to be adjusted according to growth
+ * in size.
+ * @param current_size Current size of vector
+ * @return new size of vector, calculated based on agreed formula.
+ */
 static size_t compute_new_capacity(size_t current_size) {
-    return (3 * current_size) / 2;
+    return (3 * current_size) / 2; // formula can be changed
 }
 
 void vl_vector_init(VLVector* vec, size_t elem_size) {
     vec->size = 0;
     vec->capacity = VL_VECTOR_INIT_CAP;
-    assert(elem_size <= MAX_ELEM_SIZE);
+    assert(elem_size <= MAX_ELEM_SIZE); // makes sure element size does not exceed MAX_ELEM_SIZE
     vec->elem_size = elem_size;
     vec->dynamic_data = NULL;
     vec->is_dynamic = false;
@@ -32,7 +37,7 @@ static const void* get_storage_const(const VLVector* vec) {
 }
 
 bool vl_vector_push_back(VLVector* vec, const void* value) {
-    if (vec->size == vec->capacity) {
+    if (vec->size == vec->capacity) { // If vector needs to be enlarged
         size_t new_capacity = compute_new_capacity(vec->size + 1);
         void* new_data = malloc(new_capacity * vec->elem_size);
         if (!new_data) return false;
@@ -55,7 +60,7 @@ void vl_vector_pop_back(VLVector* vec) {
     vec->size--;
 
     if (vec->is_dynamic && vec->size <= VL_VECTOR_INIT_CAP) {
-        memcpy(vec->static_data, vec->dynamic_data, vec->size * vec->elem_size);
+        memcpy(vec->static_data, vec->dynamic_data, vec->size * vec->elem_size); // return to static mode
         free(vec->dynamic_data);
         vec->dynamic_data = NULL;
         vec->capacity = VL_VECTOR_INIT_CAP;

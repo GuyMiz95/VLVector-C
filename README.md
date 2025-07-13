@@ -1,6 +1,6 @@
 # VLVector-C
 
-A generic, hybrid vector implementation in C that uses stack memory for small arrays and switches to dynamic heap allocation for larger ones. Inspired by C++'s `std::vector`, but designed for embedded systems or performance-conscious C projects.
+A generic, hybrid vector implementation in C that uses stack memory for small arrays and switches to dynamic heap allocation for larger ones. Inspired by C++'s `std::vector`.
 
 ---
 
